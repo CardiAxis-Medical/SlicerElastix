@@ -175,4 +175,16 @@
       <File Name="Par0044NonRigid.txt" />
     </ParameterFiles>
   </ParameterSet>
-<ParameterSet content="mouse brain" description="inter-subject; rigid + affine + B-spline transformation; advanced normalized correlation + mutual information metric with a transform bending energy penalty" id="par0034_danskjdsand" modality="2D CBF MR (Dansdkansjd)" publications="Bink (2016)"><ParameterFiles><File Name="Par0034rigid.txt" /><File Name="Par0034affine.txt" /><File Name="Par0034bspline.txt" /></ParameterFiles></ParameterSet></ElastixParameterSetDatabase>
+  <ParameterSet content="mouse brain" description="inter-subject; rigid + affine + B-spline transformation; advanced normalized correlation + mutual information metric with a transform bending energy penalty" id="par0034_danskjdsand" modality="2D CBF MR (Dansdkansjd)" publications="Bink (2016)">
+    <ParameterFiles>
+      <File Name="Par0034rigid.txt" />
+      <File Name="Par0034affine.txt" />
+      <File Name="Par0034bspline.txt" />
+    </ParameterFiles>
+</ParameterSet>
+  <ParameterSet id="cardiac-mri" modality="Cardiac MRI" content="cine" description="intra-subject, between time frames of a cine acquisition; B-spline transformation (10 mm in-plane, no downsampling across slices); mutual information" publications="">
+    <ParameterFiles>
+      <File Name="Parameters_CardiacMRI_BSpline.txt" />
+    </ParameterFiles>
+  </ParameterSet>
+</ElastixParameterSetDatabase>

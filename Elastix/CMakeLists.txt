@@ -117,6 +117,7 @@ set(REGISTRATION_PARAMETER_FILES
   Parameters_Affine.txt
   Parameters_BSpline.txt
   Parameters_BSplineNCC.txt
+  Parameters_CardiacMRI_BSpline.txt
   Parameters_Rigid.txt
   Parameters_RigidAMS.txt
   Parameters_Translation.txt

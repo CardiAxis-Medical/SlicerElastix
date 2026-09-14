@@ -1,0 +1,58 @@
+// Cardiac MRI cine: deformable registration between time frames of the same acquisition
+// Single B-spline stage without rigid/affine initialization (frames share the scan geometry).
+// Tuned on a short-axis cine stack (1.25 x 1.25 x 5.12 mm, 128 x 128 x 16):
+// LV Dice blood pool/myocardium in the Slicer module: 0.92/0.88 (frame 0->4; "generic (all)" preset 0.93/0.87)
+// and 0.86/0.84 (frame 0->7, largest motion; "generic (all)" preset 0.83/0.78), no folding.
+// Assumes the third image axis is the slice direction: the pyramid never downsamples it.
+// Tested on hfpef_cine_3dt.seq.nrrd (https://github.com/Slicer/SlicerTestingData/releases/download/SHA256/d6be9561fb5cb6a311539d95f6e6baed4e0400fa1700d650c4220bef9ae9f434)
+// Source: https://github.com/zhennongchen/HFpEF_CMR_GraphStrain
+
+
+// ********** Components **********
+(FixedInternalImagePixelType "float")
+(MovingInternalImagePixelType "float")
+(UseDirectionCosines "true")
+(Registration "MultiResolutionRegistration")
+(Interpolator "BSplineInterpolator")
+(ResampleInterpolator "FinalBSplineInterpolator")
+(Resampler "DefaultResampler")
+(FixedImagePyramid "FixedRecursiveImagePyramid")
+(MovingImagePyramid "MovingRecursiveImagePyramid")
+(Optimizer "AdaptiveStochasticGradientDescent")
+(Transform "BSplineTransform")
+(Metric "AdvancedMattesMutualInformation")
+
+// ********** Transform **********
+// Finer in-plane grids (8 mm or less) fold; 16 mm under-fits the myocardium.
+(FinalGridSpacingInPhysicalUnits 10.0 10.0 15.36)
+(HowToCombineTransforms "Compose")
+(AutomaticTransformInitialization "false")
+
+// ********** Similarity measure **********
+(NumberOfHistogramBins 32)
+
+// ********** Multiresolution **********
+(NumberOfResolutions 3)
+(ImagePyramidSchedule 4 4 1 2 2 1 1 1 1)
+
+// ********** Optimizer **********
+(AutomaticParameterEstimation "true")
+(MaximumNumberOfIterations 1000)
+
+// ********** Image sampling **********
+(ImageSampler "RandomCoordinate")
+(NumberOfSpatialSamples 5000)
+(NewSamplesEveryIteration "true")
+(CheckNumberOfSamples "true")
+
+// ********** Interpolation and resampling **********
+(BSplineInterpolationOrder 1)
+(FinalBSplineInterpolationOrder 3)
+(DefaultPixelValue 0)
+
+// ********** Output (file names and formats expected by the Slicer Elastix module) **********
+(WriteResultImage "true")
+(ResultImagePixelType "float")
+(ResultImageFormat "mhd")
+(ITKTransformOutputFileNameExtension "h5")
+(WriteITKCompositeTransform "true")
